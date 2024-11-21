@@ -1,26 +1,10 @@
-import React from "react";
-import { GameStateProvider, useGameState } from "../context/GameStateContext";
-import PlayerCard from "../components/PlayerCard";
+import { GameStateProvider } from '../context/GameStateContext';
+import CommanderTracker from '../components/CommanderTracker';
 
-const MainApp = () => {
-  const { players } = useGameState();
-
+export default function Home() {
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Commander Tracker</h1>
-      <div className="grid grid-cols-2 gap-4">
-        {players.map((player) => (
-          <PlayerCard key={player.id} player={player} />
-        ))}
-      </div>
-    </div>
+    <GameStateProvider>
+      <CommanderTracker />
+    </GameStateProvider>
   );
-};
-
-const Home = () => (
-  <GameStateProvider>
-    <MainApp />
-  </GameStateProvider>
-);
-
-export default Home;
+}
