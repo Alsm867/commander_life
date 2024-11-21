@@ -1,30 +1,29 @@
-import { useState } from 'react';
-import { useGameState } from '../context/GameStateContext';
+import { createContext, useState, useContext } from 'react';
 
-const CommanderTracker = () => {
-  const { players, addPlayer, removePlayer } = useGameState();
-  const [playerName, setPlayerName] = useState('');
+const GameStateContext = createContext();
+
+export const GameStateProvider = ({ children }) => {
+  const [players, setPlayers] = useState([]);
+  const [playerName, setPlayerName] = useState(''); // Add this state
+
+  const addPlayer = (playerName) => {
+    setPlayers(prevPlayers => [...prevPlayers, { name: playerName, life: 40 }]);
+  };
+
+  const removePlayer = (playerName) => setPlayers(players.filter(p => p.name !== playerName));
+  const adjustLife = (player, amount) => {
+    const updatedPlayers = players.map(p =>
+      p.name === player.name ? { ...p, life: p.life + amount } : p
+    );
+    setPlayers(updatedPlayers);
+  };
 
   return (
-    <div>
-      <input
-        type="text"
-        value={playerName}
-        onChange={(e) => setPlayerName(e.target.value)}
-        placeholder="Enter player name"
-      />
-      <button onClick={() => addPlayer(playerName)}>Add Player</button>
-
-      <div>
-        {players.map((player) => (
-          <div key={player.id}>
-            <span>{player.name}</span>
-            <button onClick={() => removePlayer(player.id)}>Remove</button>
-          </div>
-        ))}
-      </div>
-    </div>
+    <GameStateContext.Provider value={{ players, addPlayer, removePlayer, adjustLife }}>
+      {children}
+    </GameStateContext.Provider>
   );
 };
 
-export default CommanderTracker;
+
+export const useGameState = () => useContext(GameStateContext);
