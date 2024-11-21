@@ -1,0 +1,19 @@
+commander-tracker/
+├── public/         # For static assets (images, icons)
+├── src/
+│   ├── components/ # Reusable React components
+│   │   ├── PlayerCard.js       # Player tracking card
+│   │   ├── CommanderTracker.js # Commander damage tracker
+│   │   ├── GameLog.js          # History of events
+│   │   ├── TurnTracker.js      # Turn tracking display
+│   │   └── SettingsModal.js    # Customization settings
+│   ├── pages/      # Next.js pages
+│   │   ├── index.js            # Main app
+│   │   └── _app.js             # Global app settings
+│   ├── styles/     # CSS or Tailwind CSS
+│   │   └── globals.css
+│   ├── context/    # State management
+│   │   └── GameStateContext.js
+│   └── utils/      # Helper functions
+│       └── utils.js
+└── package.json
